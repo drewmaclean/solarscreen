@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+             android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp">
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text Alerts"
+            android:id="@+id/phoneCheckBox"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/phoneImageButton"
+            android:background="@android:drawable/ic_menu_info_details"
+            android:onClick="phoneImageButton_Click"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/phoneEditText"
+        android:hint="phone number"
+        android:inputType="phone"
+        android:phoneNumber="false"
+        android:layout_marginLeft="45dp"
+        android:enabled="true"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Threshold: "
+            android:id="@+id/textView2"
+            android:layout_gravity="left"/>
+
+        <Spinner
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:id="@+id/phoneThresholdSpinner"
+            android:entries="@array/spinner_array"
+            android:spinnerMode="dropdown"
+            android:prompt="@string/spinner_prompt"
+            android:layout_gravity="left"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp">
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travel Mode"
+            android:id="@+id/updateRateSwitch"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/travelImageButton"
+            android:background="@android:drawable/ic_menu_info_details"
+            android:onClick="travelImageButton_Click"/>
+    </LinearLayout>
+
+</LinearLayout>
