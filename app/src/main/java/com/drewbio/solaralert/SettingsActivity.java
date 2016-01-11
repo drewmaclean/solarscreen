@@ -12,8 +12,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.drewbio.solaralert.R;
-
 
 public class SettingsActivity extends Activity {
 
@@ -33,7 +31,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.activity_settings);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -68,7 +66,7 @@ public class SettingsActivity extends Activity {
 
     public void travelImageButton_Click(View view) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setMessage("Turn this on while traveling to receive more frequent Loc updates.");
+        builder1.setMessage("Turn this on while traveling to receive more frequent location updates.");
         builder1.setCancelable(true);
         builder1.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {

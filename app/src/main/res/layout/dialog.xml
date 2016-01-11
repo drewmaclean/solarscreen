@@ -3,31 +3,47 @@
                 android:layout_height="fill_parent" >
 
     <NumberPicker
-        android:id="@+id/numberPicker1"
+        android:id="@+id/reminderNumberPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/reminderNumberPicker"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Remind me to apply sunscreen in:"
+        android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/numberPicker1"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="98dp"
-        android:layout_toRightOf="@+id/numberPicker1"
-        android:text="Cancel" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/numberPicker1"
-        android:text="Set" />
+        android:layout_marginTop="35dp"/>
 
 </RelativeLayout>

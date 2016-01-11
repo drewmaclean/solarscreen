@@ -1,19 +1,15 @@
 package com.drewbio.solaralert;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,14 +24,13 @@ import com.google.android.gms.location.LocationRequest;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  {
 
     // start alarm service
-    SampleAlarmReceiver alarm = new SampleAlarmReceiver();
+    UpdateReceiver alarm = new UpdateReceiver();
 
     protected final String TAG = "SolarScreen";
     protected Boolean mRequestingLocationUpdates = false;
@@ -115,6 +110,12 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+
+
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -130,10 +131,10 @@ public class MainActivity extends AppCompatActivity  {
         //scheduleClient.doBindService();
 
         //System.out.println(mRequestingLocationUpdates);
-        if(!mRequestingLocationUpdates) {
+        //if(!mRequestingLocationUpdates) {
 
            // buildGoogleApiClient();
-        }
+        //}
         loc = new Loc(this);
         alarm.setAlarm(this);
     }
@@ -166,10 +167,10 @@ public class MainActivity extends AppCompatActivity  {
      * Updates the latitude, the longitude, and the last Loc time in the UI.
      */
     public static void updateUI() {
-        if (mCurrentLocation != null) {
+        if (Loc.mCurrentLocation != null) {
             mUVIndexTextView.setText("Solar Intensity: " + mUVIndex);
-            mLatitudeTextView.setText("Latitude: " + String.valueOf(mCurrentLocation.getLatitude()));
-            mLongitudeTextView.setText("Longitude: " + String.valueOf(mCurrentLocation.getLongitude()));
+            mLatitudeTextView.setText("Latitude: " + String.valueOf(Loc.mCurrentLocation.getLatitude()));
+            mLongitudeTextView.setText("Longitude: " + String.valueOf(Loc.mCurrentLocation.getLongitude()));
             mLastUpdateTimeTextView.setText("Last Updated: " + Loc.mLastUpdateTime);
             mZipCodeTextView.setText("Zip Code: " + mZipCode);
         }
@@ -178,7 +179,8 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-        loc.getLocation();
+        mCurrentLocation = loc.getLocation();
+        updateUI();
     }
 
     @Override
@@ -188,7 +190,8 @@ public class MainActivity extends AppCompatActivity  {
         // connection to GoogleApiClient intact.  Here, we resume receiving
         // Loc updates if the user has requested them.
 
-        loc.getLocation();
+        mCurrentLocation = loc.getLocation();
+        updateUI();
     }
 
     @Override
@@ -228,7 +231,7 @@ public class MainActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 int reminderDuration = ((np.getValue() + 1) * 30) * 60 * 1000; // convert to minutes then to milliseconds
                 alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                receiverIntent = new Intent(getBaseContext(), AlarmReceiver.class);
+                receiverIntent = new Intent(getBaseContext(), ReminderAlarmReceiver.class);
                 alarmIntent = PendingIntent.getBroadcast(getBaseContext(), 0, receiverIntent, 0);
                 alarmMgr.set(AlarmManager.RTC, Calendar.getInstance().getTimeInMillis() + reminderDuration, alarmIntent);
                 d.dismiss();
@@ -246,15 +249,6 @@ public class MainActivity extends AppCompatActivity  {
     public void updateBtn_Click(View view) {
         Toast.makeText(this, "Updating now", Toast.LENGTH_SHORT).show();
         //startLocationUpdates();
-        getUVIndex();
-    }
-
-    // This is the method that is called when the submit button is clicked
-    public void getUVIndex() {
         mCurrentLocation = loc.getLocation();
-        //mZipCode = Util.getAddressFromLocation(this, mCurrentLocation).getPostalCode();
-        //String urlString = apiURL + mZipCode;
-        //new Util().fetchCurrentIntensity(urlString);
-        //mUVIndex = Util.getCurrentIntensity();
     }
 }

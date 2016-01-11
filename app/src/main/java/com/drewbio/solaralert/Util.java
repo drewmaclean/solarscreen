@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.widget.Switch;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -15,13 +16,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class Util {
-    public static List<Intensity> intensityList = new ArrayList<Intensity>();
 
     public static long convertToMilliseconds(String time) {
         int num = Integer.parseInt(time.replaceAll("[^0-9]", ""));
@@ -34,6 +37,16 @@ public class Util {
             milliseconds = num * 1000;
         }
         return milliseconds;
+    }
+
+    public static int parseTime(String dateTime) throws ParseException {
+        String time = dateTime.substring(dateTime.length() - 5, dateTime.length() );
+
+        SimpleDateFormat displayFormat = new SimpleDateFormat("HH");
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh a");
+        Date convertedTime = parseFormat.parse(time);
+
+        return Integer.parseInt(displayFormat.format(convertedTime));
     }
 
     public static Address getAddressFromLocation(Context context, Location location) {
@@ -50,58 +63,12 @@ public class Util {
         return address;
     }
 
-    public class Intensity {
-        public java.lang.String uvIndex;
-        public int hour;
-        public java.lang.String timeIndicator;
-
-        public Intensity(int hour, java.lang.String timeIndicator, java.lang.String uvIndex) {
-            this.hour = hour;
-            this.timeIndicator = timeIndicator;
-            this.uvIndex = uvIndex;
-        }
-
-        protected int calculateTime() {
-            if (timeIndicator.equalsIgnoreCase("AM") || (timeIndicator.equalsIgnoreCase("PM") && hour == 12)) {
-                //System.out.println("a" + hour + timeIndicator);
-                return hour;
-            } else {
-                //System.out.println("b" + hour + timeIndicator);
-                return hour + 12;
-            }
-        }
-
-        @Override
-        public java.lang.String toString() {
-            return "TIME: " + hour + timeIndicator + " UV: " + uvIndex;
-        }
-    }
+/*
 
     public void fetchCurrentIntensity(String urlString) {
         new CallAPI().execute(urlString);
     }
 
-    public static String getCurrentIntensity() {
-        String currentIntensity = "0";
-        int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        //System.out.println("current hour: " + currentHour);
-
-        boolean found = false;
-        for (Intensity uv : intensityList) {
-            int time = uv.calculateTime();
-            //System.out.println("checking time: " + time);
-            if (time == currentHour) {
-
-                currentIntensity = uv.uvIndex;
-                found = true;
-                break;
-            }
-        }
-        if (!found)
-            currentIntensity = "0";
-
-        return currentIntensity;
-    }
 
     private class CallAPI extends AsyncTask<java.lang.String, java.lang.String, java.lang.String> {
         List<Intensity> resultList;
@@ -203,5 +170,6 @@ public class Util {
             return resultList;
         }
     } // end CallAPI
+*/
 
 }

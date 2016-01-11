@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
 
-import com.drewbio.solaralert.R;
 import com.luckycatlabs.sunrisesunset.SunriseSunsetCalculator;
 import com.luckycatlabs.sunrisesunset.dto.Location;
 
@@ -13,7 +12,6 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
-    public static final String ACTION_AUTO_UPDATE = "AUTO_UPDATE";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -25,7 +23,7 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
         int officialSunset;
 
         try {
-            MainActivity ma = new MainActivity();
+            //MainActivity ma = new MainActivity();
 
             Location location = new Location(MainActivity.mCurrentLocation.getLatitude(), MainActivity.mCurrentLocation.getLongitude());
             SunriseSunsetCalculator calculator = new SunriseSunsetCalculator(location, TimeZone.getDefault());
@@ -39,19 +37,19 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
         } catch (Exception e) {
             //System.out.println(e);
-            officialSunrise = 7;
-            officialSunset = 20;
+            officialSunrise = 9;
+            officialSunset = 18;
         }
 
             int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
             if (currentHour <= officialSunrise || currentHour >= officialSunset) {
-                remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_night);
+                remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int1);
                 remoteViews.setTextViewText(R.id.textView, "ZZZ");
             } else {
                 remoteViews.setTextViewText(R.id.textView, MainActivity.mUVIndex);
 
-                String intensityValue = "";
-                Boolean found = false;
+                int intensityValue = 0;
+/*                Boolean found = false;
                 for (MainActivity.Intensity intensity : MainActivity.intensityList) {
                     int time = intensity.calculateTime();
                     //System.out.println(time);
@@ -62,30 +60,31 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
                     }
                 }
                 if (!found)
-                    intensityValue = "0";
+                    intensityValue = "0";*/
+                intensityValue = Intensity.getCurrentIntensity();
 
                 switch (intensityValue) {
-                    case "0":
-                    case "1":
-                    case "2":
-                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_low);
+                    case 0:
+                    case 1:
+                    case 2:
+                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int1);
                         break;
-                    case "3":
-                    case "4":
-                    case "5":
-                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_mild);
+                    case 3:
+                    case 4:
+                    case 5:
+                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int2);
                         break;
-                    case "6":
-                    case "7":
-                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_mid);
+                    case 6:
+                    case 7:
+                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int3);
                         break;
-                    case "8":
-                    case "9":
-                    case "10":
-                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_high);
+                    case 8:
+                    case 9:
+                    case 10:
+                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int4);
                         break;
-                    case "11":
-                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_ultra);
+                    case 11:
+                        remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int5);
                         break;
                     default:
                         break;
@@ -124,19 +123,19 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
 
         } catch (Exception e) {
             //System.out.println(e);
-            officialSunrise = 7;
-            officialSunset = 20;
+            officialSunrise = 9;
+            officialSunset = 18;
         }
 
         int currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (currentHour <= officialSunrise || currentHour >= officialSunset) {
-            remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_night);
+            remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int1);
             remoteViews.setTextViewText(R.id.textView, "ZZZ");
         } else {
             remoteViews.setTextViewText(R.id.textView, MainActivity.mUVIndex);
 
-            String intensityValue = "";
-            Boolean found = false;
+            int intensityValue = 0;
+/*            Boolean found = false;
             for (MainActivity.Intensity intensity : MainActivity.intensityList) {
                 int time = intensity.calculateTime();
                 //System.out.println(time);
@@ -147,30 +146,31 @@ public class AppWidgetProvider extends android.appwidget.AppWidgetProvider {
                 }
             }
             if (!found)
-                intensityValue = "0";
+                intensityValue = "0";*/
+            intensityValue = Intensity.getCurrentIntensity();
 
             switch (intensityValue) {
-                case "0":
-                case "1":
-                case "2":
-                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_low);
+                case 0:
+                case 1:
+                case 2:
+                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int1);
                     break;
-                case "3":
-                case "4":
-                case "5":
-                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_mild);
+                case 3:
+                case 4:
+                case 5:
+                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int2);
                     break;
-                case "6":
-                case "7":
-                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_mid);
+                case 6:
+                case 7:
+                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int3);
                     break;
-                case "8":
-                case "9":
-                case "10":
-                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_high);
+                case 8:
+                case 9:
+                case 10:
+                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int4);
                     break;
-                case "11":
-                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.sun_ultra);
+                case 11:
+                    remoteViews.setImageViewResource(R.id.imageView, R.drawable.icon_int5);
                     break;
                 default:
                     break;
